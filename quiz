@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz de los años 1920</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f9;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .quiz-container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .answers button {
+      display: block;
+      margin: 5px 0;
+      padding: 10px;
+      width: 100%;
+      background: #e7e7e7;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .answers button:hover {
+      background: #d4d4d4;
+    }
+    .answers button.correct {
+      background: #a8e6a1;
+    }
+    .answers button.wrong {
+      background: #f4a6a6;
+    }
+    #score {
+      text-align: center;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Quiz de los años 1920</h1>
+  <div class="quiz-container" id="quiz-container">
+    <!-- Preguntas y respuestas del quiz se insertarán aquí dinámicamente -->
+  </div>
+  <div id="score"></div>
+  <script>
+    const quizData = [
+      {
+        question: "¿Qué ciudad era conocida como el centro de la industria automotriz en los años 1920?",
+        choices: ["Detroit", "Chicago", "Los Ángeles"],
+        correct: "Detroit"
+      },
+      {
+        question: "¿Qué empresa se hizo famosa por su línea de ensamblaje?",
+        choices: ["Ford Motor Company", "General Motors", "Chrysler"],
+        correct: "Ford Motor Company"
+      },
+      {
+        question: "¿Qué ciudad era un importante centro financiero en los años 1920?",
+        choices: ["Nueva York", "San Francisco", "Miami"],
+        correct: "Nueva York"
+      },
+      {
+        question: "¿Cómo se llamó el famoso colapso de la bolsa en 1929?",
+        choices: ["Martes Negro", "Viernes Negro", "Lunes Negro"],
+        correct: "Martes Negro"
+      },
+      {
+        question: "¿Qué ciudad es conocida por el auge del jazz durante los años 1920?",
+        choices: ["Nueva Orleans", "Chicago", "Harlem"],
+        correct: "Nueva Orleans"
+      },
+      {
+        question: "¿Cuál era la principal industria en Pittsburgh durante los años 1920?",
+        choices: ["Acero", "Textiles", "Automóviles"],
+        correct: "Acero"
+      },
+      {
+        question: "¿Qué empresa fue pionera en la industria de la aviación en los años 1920?",
+        choices: ["Boeing", "Douglas Aircraft", "Lockheed"],
+        correct: "Boeing"
+      },
+      {
+        question: "¿Qué ciudad fue sede de la Exposición Internacional de 1929?",
+        choices: ["San Diego", "Chicago", "Nueva York"],
+        correct: "Chicago"
+      },
+      {
+        question: "¿Qué movimiento cultural importante surgió en Harlem durante los años 1920?",
+        choices: ["Renacimiento de Harlem", "Gran Migración", "Prohibición"],
+        correct: "Renacimiento de Harlem"
+      },
+      {
+        question: "¿Qué ciudad es conocida por el auge de la industria del cine en los años 1920?",
+        choices: ["Los Ángeles", "Nueva York", "Seattle"],
+        correct: "Los Ángeles"
+      }
+    ];
+
+    const quizContainer = document.getElementById("quiz-container");
+    const scoreContainer = document.getElementById("score");
+    let score = 0;
+
+    function loadQuiz() {
+      quizData.forEach((item, index) => {
+        const questionDiv = document.createElement("div");
+        questionDiv.classList.add("question");
+        questionDiv.innerHTML = `<h3>${index + 1}. ${item.question}</h3>`;
+        
+        const answersDiv = document.createElement("div");
+        answersDiv.classList.add("answers");
+        item.choices.forEach(choice => {
+          const button = document.createElement("button");
+          button.textContent = choice;
+          button.onclick = () => checkAnswer(button, item.correct);
+          answersDiv.appendChild(button);
+        });
+
+        questionDiv.appendChild(answersDiv);
+        quizContainer.appendChild(questionDiv);
+      });
+    }
+
+    function checkAnswer(button, correctAnswer) {
+      const allButtons = button.parentElement.querySelectorAll("button");
+      allButtons.forEach(btn => {
+        btn.disabled = true;
+        if (btn.textContent === correctAnswer) btn.classList.add("correct");
+        else btn.classList.add("wrong");
+      });
+      if (button.textContent === correctAnswer) score++;
+      updateScore();
+    }
+
+    function updateScore() {
+      scoreContainer.textContent = `Tu puntaje: ${score}/${quizData.length}`;
+    }
+
+    loadQuiz();
+  </script>
+</body>
+</html>
